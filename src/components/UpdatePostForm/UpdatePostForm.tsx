@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { updatePost } from '../../api/posts';
 
 export const UpdatePostForm: React.FC = () => {
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');
+  const history = useHistory();
 
   const { postId } = useParams<{postId: string}>() || '';
 
@@ -28,6 +29,7 @@ export const UpdatePostForm: React.FC = () => {
       body,
     }, postId);
     reset();
+    history.goBack();
   };
 
   return (

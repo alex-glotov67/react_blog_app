@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { addPost } from '../../api/posts';
 
 interface Props {
@@ -9,6 +10,7 @@ export const NewPostForm: React.FC<Props> = ({ maxId }) => {
   const [currentId, setCurrentId] = useState(maxId);
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');
+  const history = useHistory();
 
   const reset = () => {
     setCurrentId(currentId + 1);
@@ -32,6 +34,7 @@ export const NewPostForm: React.FC<Props> = ({ maxId }) => {
       body,
     });
     reset();
+    history.goBack();
   };
 
   return (
