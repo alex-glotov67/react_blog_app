@@ -64,7 +64,7 @@ export const PostDetails: React.FC<Props> = (props) => {
                   className="list-group-item"
                   key={comment.id}
                 >
-                  <p>{comment.body}</p>
+                  <p className="ps-2">{comment.body}</p>
                 </li>
               ))}
             </>
@@ -76,20 +76,16 @@ export const PostDetails: React.FC<Props> = (props) => {
             className="btn btn-info mb-4"
             onClick={() => hideTriggerComments()}
           >
-            {isCommentsVisible ? 'Hide comments' : 'Show comments'}
-            {/* {`${comments.length} comments`} */}
+            {isCommentsVisible ? 'Hide ' : 'Show '}
+            {`${post?.comments?.length} comments`}
           </button>
         </div>
       </div>
 
-      <section>
-        <div className="PostDetails__form-wrapper">
-          <NewCommentForm
-            postId={selectedPostId}
-            addNewComment={addNewComment}
-          />
-        </div>
-      </section>
+      <NewCommentForm
+        postId={selectedPostId}
+        addNewComment={addNewComment}
+      />
     </div>
   );
 };

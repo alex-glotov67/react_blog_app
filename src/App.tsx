@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
-import { PostsList } from './components/PostsList';
-import { PostDetails } from './components/PostDetails';
+
 import { getAllPosts } from './api/posts';
-import { Loader } from './components/Loader';
 import { NewPostForm } from './components/NewPostForm';
 import { Navbar } from './components/Navbar';
+import { PostPage } from './components/PostsPage';
+import { NotFoundPage } from './components/NotFoundPage';
+import { HomePage } from './components/HomePage';
+import { UpdatePostForm } from './components/UpdatePostForm';
 
 const App: React.FC = () => {
   const [posts, setPosts] = useState([] as Post[]);
-  const [selectedPostID, setSelectedPostID] = useState(0);
   const [loader, setLoader] = useState(false);
-
-  const changePostId = (postId: number) => {
-    setSelectedPostID(postId);
-  };
 
   useEffect(() => {
     setLoader(false);
@@ -30,34 +28,28 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Navbar />
-      <main className="App__main">
-        <div className="App__sidebar">
-          {loader ? (
-            <>
-              {posts.length !== 0
-                ? (
-                  <PostsList
-                    changePostId={changePostId}
-                    selectedPostId={selectedPostID}
-                    posts={posts}
-                  />
-                )
-                : <h2>have any posts yet</h2>}
-            </>
-          )
-            : <Loader />}
+      <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
 
-        </div>
+        <Route path="/posts">
+          <PostPage posts={posts} loader={loader} />
+        </Route>
 
-        {selectedPostID !== 0 && (
-          <div className="App__content">
-            <PostDetails selectedPostId={selectedPostID} />
-          </div>
-        )}
+        <Route path="/add_post">
+          <NewPostForm maxId={setMaxId()} />
+        </Route>
 
-        <NewPostForm maxId={setMaxId()} />
+        <Route
+          path="/update_post/:postId"
+          component={UpdatePostForm}
+        />
 
-      </main>
+        <Redirect path="/home" to="/" />
+
+        <NotFoundPage />
+      </Switch>
     </div>
   );
 };

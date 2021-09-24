@@ -27,7 +27,7 @@ export const NewCommentForm: React.FC<Props> = (props) => {
   };
 
   return (
-    <form className="container">
+    <form>
 
       <div className="input-group mb-2">
         <textarea

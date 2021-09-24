@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import { NavLink, useHistory } from 'react-router-dom';
 import { deletePost } from '../../api/posts';
+// import { UpdatePostForm } from '../UpdatePostForm';
 
 interface Props {
   changePostId: (postId: number) => void;
@@ -15,9 +17,13 @@ export const PostsList: React.FC<Props> = (props) => {
     posts,
   } = props;
 
+  const history = useHistory();
+
   return (
-    <div className="container col-10">
-      <h2>Posts:</h2>
+    <div className="container">
+      <h2 className="title text-center">
+        Posts
+      </h2>
       {posts.map(post => (
         <div className="card mb-4" key={post.id}>
           <div className="card-header">
@@ -26,8 +32,8 @@ export const PostsList: React.FC<Props> = (props) => {
           <div className="card-body">
             <h5 className="card-title">{post.title}</h5>
             <p className="card-text">{post.body}</p>
-            <button
-              type="button"
+            <NavLink
+              to={`/posts/${post.id}`}
               className={classNames(
                 'me-2',
                 'btn',
@@ -37,13 +43,21 @@ export const PostsList: React.FC<Props> = (props) => {
               onClick={() => {
                 if (selectedPostId === post.id) {
                   changePostId(0);
+                  history.goBack();
                 } else {
                   changePostId(post.id);
                 }
               }}
             >
               {selectedPostId === post.id ? 'Close' : 'Open'}
-            </button>
+            </NavLink>
+
+            <NavLink
+              to={`/update_post/${post.id}`}
+              className="btn btn-warning me-2"
+            >
+              Update
+            </NavLink>
 
             <button
               type="button"
@@ -52,7 +66,6 @@ export const PostsList: React.FC<Props> = (props) => {
             >
               Delete
             </button>
-
           </div>
         </div>
 

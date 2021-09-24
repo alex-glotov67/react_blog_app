@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { addPost } from '../../api/posts';
+import { NavLink, useParams } from 'react-router-dom';
+import { updatePost } from '../../api/posts';
 
-interface Props {
-  maxId: number;
-}
-
-export const NewPostForm: React.FC<Props> = ({ maxId }) => {
-  const [currentId, setCurrentId] = useState(maxId);
+export const UpdatePostForm: React.FC = () => {
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');
 
+  const { postId } = useParams<{postId: string}>() || '';
+
   const reset = () => {
-    setCurrentId(currentId + 1);
     setTitle('');
     setBody('');
   };
@@ -24,13 +21,12 @@ export const NewPostForm: React.FC<Props> = ({ maxId }) => {
     setTitle(event.target.value);
   };
 
-  const handleAddPost = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleUpdatePost = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    addPost({
-      id: currentId + 1,
+    updatePost({
       title,
       body,
-    });
+    }, postId);
     reset();
   };
 
@@ -61,11 +57,18 @@ export const NewPostForm: React.FC<Props> = ({ maxId }) => {
 
       <button
         type="submit"
-        className="btn btn-primary"
-        onClick={(event) => handleAddPost(event)}
+        className="btn btn-primary me-2"
+        onClick={(event) => handleUpdatePost(event)}
       >
-        Add a post
+        Update a post
       </button>
+
+      <NavLink
+        to="/posts"
+        className="btn btn-danger"
+      >
+        Close
+      </NavLink>
     </form>
   );
 };

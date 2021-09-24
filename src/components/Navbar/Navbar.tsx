@@ -2,11 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 export const Navbar: React.FC = () => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <div className="container-fluid">
+  <nav className="navbar navbar-expand-lg navbar-light bg-light mb-2">
+    <div className="container">
       <NavLink
         className="navbar-brand"
-        to=""
+        to="/home"
       >
         Logo
       </NavLink>
@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => (
             <NavLink
               className="nav-link"
               aria-current="page"
-              to=""
+              to="/home"
             >
               Home
             </NavLink>
@@ -35,9 +35,17 @@ export const Navbar: React.FC = () => (
           <li className="nav-item">
             <NavLink
               className="nav-link"
-              to="#"
+              to="/posts"
             >
               Posts
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              to="/add_post"
+            >
+              Add Post
             </NavLink>
           </li>
         </ul>

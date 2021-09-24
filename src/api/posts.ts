@@ -42,6 +42,16 @@ export const addPost = (newPost: Post) => {
   });
 };
 
+export const updatePost = (updatedPost: Partial<Post>, postId: string) => {
+  return fetch(`${BASE_URL}posts/${postId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(updatedPost),
+  });
+};
+
 export const deletePost = (postId: number) => {
   return fetch(`${BASE_URL}posts/${postId}`, {
     method: 'DELETE',
